@@ -57,8 +57,6 @@ pipeline {
     }
 
 	stage('Notify') {
-      steps {
-        script {
 		  def jobName = env.JOB_NAME +' '+env.BRANCH_NAME
   		  def buildNumber = env.BUILD_NUMBER
           if (currentBuild.result == 'FAILURE') {
@@ -77,9 +75,7 @@ pipeline {
 				text: "Start a build #${buildNo}"
 			]
         	], slackURL) 
-		  }
-        }
-      }
+		}
     }
 
   }
