@@ -58,22 +58,22 @@ pipeline {
   }
   post{
     success{
-      notifyLINE("Succeed")
-	  sendToSlack(" ",[
+      notifyLINE("Succeed") //sending to function line notification
+	  sendToSlack(" ",[	//sending to function slack notification
 		[
-			title: "Project name: ${env.JOB_NAME +' '+env.BRANCH_NAME}",
+			title: "Project name: ${((env.JOB_NAME).split('/'))[2]}",
 			color: "good",
-			text: "Start a build #${env.BUILD_NUMBER}"
+			text: "Result : ${currentBuild.result}"
 		]
         ], slackURL)
     }
     failure{
-      notifyLINE("Failed")
-	    sendToSlack(" ",[
+      notifyLINE("Failed")  //sending to function line notification
+	    sendToSlack(" ",[  //sending to function slack notification
 		[
-			title: "Project name: ${env.JOB_NAME +' '+env.BRANCH_NAME}",
+			title: "Project name: ${((env.JOB_NAME).split('/'))[2]}",
 			color: "warning",
-			text: "Start a build #${env.BUILD_NUMBER}"
+			text: "Result : ${currentBuild.result}"
 		]
         ], slackURL)
     }
