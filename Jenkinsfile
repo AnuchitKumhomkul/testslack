@@ -3,6 +3,8 @@
 import groovy.json.JsonOutput
 
 def slackURL = 'https://hooks.slack.com/services/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'
+def jobName = env.JOB_NAME +' '+env.BRANCH_NAME
+def buildNumber = env.BUILD_NUMBER
 
 def sendToSlack(text, attachments, slackURL) {
     def payload = JsonOutput.toJson([
@@ -55,40 +57,27 @@ pipeline {
         }
       }
     }
-
-	stage('Notify') {
-      steps {
-        script {
-		  def jobName = env.JOB_NAME +' '+env.BRANCH_NAME
-  		  def buildNumber = env.BUILD_NUMBER
-          if (currentBuild.result == 'FAILURE') {
-			sendToSlack(" ",[
-			[
-				title: "Project name: ${jobName}",
-				color: "warning",
-				text: "Start a build #${buildNo}"
-			]
-        	], slackURL)
-		  }else {
-			sendToSlack(" ",[
-			[
-				title: "Project name: ${jobName}",
-				color: "warning",
-				text: "Start a build #${buildNo}"
-			]
-        	], slackURL) 
-		  }
-        }
-      }
-    }
-
   }
   post{
     success{
       notifyLINE("Succeed")
+	  sendToSlack(" ",[
+		[
+			title: "Project name: ${jobName}",
+			color: "warning",
+			text: "Start a build #${buildNo}"
+		]
+        ], slackURL)
     }
     failure{
       notifyLINE("Failed")
+	    sendToSlack(" ",[
+		[
+			title: "Project name: ${jobName}",
+			color: "warning",
+			text: "Start a build #${buildNo}"
+		]
+        ], slackURL)
     }
   }
 }
