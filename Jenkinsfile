@@ -61,7 +61,7 @@ pipeline {
       notifyLINE("Succeed") //sending to function line notification
 	  sendToSlack(" ",[	//sending to function slack notification
 		[
-			title: "Project name: ${((env.JOB_NAME).split('/'))[2]}",
+			title: "Project name: ${env.JOB_NAME}",
 			color: "good",
 			text: "Result : ${env.BUILD_URL}"
 		]
@@ -71,7 +71,7 @@ pipeline {
       notifyLINE("Failed")  //sending to function line notification
 	    sendToSlack(" ",[  //sending to function slack notification
 		[
-			title: "Project name: ${((env.JOB_NAME).split('/'))[2]}",
+			title: "Project name: ${env.JOB_NAME}",
 			color: "warning",
 			text: "Result : ${env.BUILD_URL}"
 		]
