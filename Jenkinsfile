@@ -6,7 +6,7 @@ def slackURL = 'https://hooks.slack.com/services/TEWCZTSUS/BJ04AQN4Q/S5XFr0CMhki
 def jobName = ((env.JOB_NAME).split('/'))[2]
 def buildNo = env.BUILD_NUMBER
 
-node('remote-docker-ssh) {    
+node('remote-docker-ssh') {    
     stage('Test Slack'){
         sendToSlack(" ",[
 		[
