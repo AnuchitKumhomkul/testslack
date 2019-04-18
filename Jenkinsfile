@@ -24,7 +24,7 @@ def notifyLINE(status) {
 
 pipeline {
   environment {
-    registry = "kowoatz/test-jenkins-pipeline"
+    registry = "kowoatz/testslack"
     registryCredential = 'kowoatz'
     dockerImage = ''
   }
@@ -33,7 +33,7 @@ pipeline {
   stages {
     stage('Cloning git') {
       steps {
-        git  'https://github.com/AnuchitKumhomkul/testjenkins.git'
+        git  'https://github.com/AnuchitKumhomkul/testslack.git'
       }
     }
 
@@ -57,6 +57,8 @@ pipeline {
     }
 
 	stage('Notify') {
+      steps {
+        script {
 		  def jobName = env.JOB_NAME +' '+env.BRANCH_NAME
   		  def buildNumber = env.BUILD_NUMBER
           if (currentBuild.result == 'FAILURE') {
@@ -75,7 +77,9 @@ pipeline {
 				text: "Start a build #${buildNo}"
 			]
         	], slackURL) 
-		}
+		  }
+        }
+      }
     }
 
   }
