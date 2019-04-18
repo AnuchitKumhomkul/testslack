@@ -63,7 +63,7 @@ pipeline {
 		[
 			title: "Project name: ${((env.JOB_NAME).split('/'))[2]}",
 			color: "good",
-			text: "Result : ${currentBuild.result}"
+			text: "Result : ${env.BUILD_URL}"
 		]
         ], slackURL)
     }
@@ -73,7 +73,7 @@ pipeline {
 		[
 			title: "Project name: ${((env.JOB_NAME).split('/'))[2]}",
 			color: "warning",
-			text: "Result : ${currentBuild.result}"
+			text: "Result : ${env.BUILD_URL}"
 		]
         ], slackURL)
     }
